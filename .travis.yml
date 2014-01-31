@@ -3,11 +3,8 @@ rvm:
   - 1.8.7
   - 1.9.3
   - 2.0.0
-script:
-  - "rake lint"
-  - "rake parser_validate"
-  - "rake template_verify"
-  - "rake spec SPEC_OPTS='--format documentation'"
+before_install: rm Gemfile.lock || true
+script: bundle exec rake test
 env:
   - PUPPET_VERSION="~> 2.7.0"
   - PUPPET_VERSION="~> 3.0.0"
@@ -18,4 +15,3 @@ env:
 matrix:
   allow_failures:
     - rvm: 2.0.0
-gemfile: Gemfile
