@@ -105,9 +105,9 @@ The 'fields' hash allows you to set custom fields which you can use in Logstash.
 
 Most sites will manage repositories seperately; however, this module can manage the repository for you.
 
-  class { 'logstashforwarder':
-    manage_repo  => true
-  }
+     class { 'logstashforwarder':
+       manage_repo  => true
+     }
 
 Note: When using this on Debian/Ubuntu you will need to add the [Puppetlabs/apt](http://forge.puppetlabs.com/puppetlabs/apt) module to your modules.
 
