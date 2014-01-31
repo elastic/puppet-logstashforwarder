@@ -1,0 +1,5 @@
+### MANAGED BY PUPPET ###
+
+<% scope.lookupvar('logstashforwarder::init_defaults').sort.map do |key, value| -%>
+<%= key %>=<%= value %>
+<% end -%>
