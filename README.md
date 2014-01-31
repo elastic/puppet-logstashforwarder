@@ -1,16 +1,16 @@
 # puppet-logstashforwarder
 
-A puppet module for managing logstashforwarder
+A puppet module for managing [logstash-forwarder](https://github.com/elasticsearch/logstash-forwarder)
 
-http://www.website.com # FIXME/TODO: modify website link
-
-[![Build Status](https://travis-ci.org/electrical/puppet-logstashforwarder.png?branch=master)](https://travis-ci.org/electrical/puppet-logstashforwarder)
+[![Build Status](https://travis-ci.org/elasticsearch/puppet-logstashforwarder.png?branch=master)](https://travis-ci.org/elasticsearch/puppet-logstashforwarder)
 
 ## Requirements
 
 * Puppet 2.7.x or better.
 * The [stdlib](https://forge.puppetlabs.com/puppetlabs/stdlib) Puppet library.
 
+Optional:
+* The [apt](http://forge.puppetlabs.com/puppetlabs/apt) Puppet library when using repo management on Debian/Ubuntu.
 
 ## Usage
 
@@ -68,6 +68,49 @@ Disable and remove logstashforwarder entirely:
        ensure => 'absent'
      }     
 
+## Configuration
+
+### Network and SSL
+
+For the network part of the configuration you need to set the servers and ssl information.
+
+     class { 'logstashforwarder':
+       servers  => [ 'logstash.yourdomain.com' ],
+       ssl_key  => 'puppet:///path/to/your/ssl.key',
+       ssl_ca   => 'puppet:///path/to/your/ssl.ca',
+       ssl_cert => 'puppet:///path/to/your/ssl.cert'
+     }
+
+If you already manage the SSL files you can also specify them as the full path.
+
+     class { 'logstashforwarder':
+       servers  => [ 'logstash.yourdomain.com' ],
+       ssl_key  => '/path/to/your/ssl.key',
+       ssl_ca   => '/path/to/your/ssl.ca',
+       ssl_cert => '/path/to/your/ssl.cert'
+     }
+
+### Files
+
+For configuring the files you want to process you can use the 'file' define:
+
+     logstashforwarder::file { 'apache':
+       paths  => [ '/var/log/apache/access.log' ],
+       fields => { 'type' => 'apache' },
+     }
+
+The 'fields' hash allows you to set custom fields which you can use in Logstash.
+
+## Repository management
+
+Most sites will manage repositories seperately; however, this module can manage the repository for you.
+
+  class { 'logstashforwarder':
+    manage_repo  => true
+  }
+
+Note: When using this on Debian/Ubuntu you will need to add the [Puppetlabs/apt](http://forge.puppetlabs.com/puppetlabs/apt) module to your modules.
+
 ## Service Management
 
 Currently only the basic SysV-style [init](https://en.wikipedia.org/wiki/Init) service provider is supported but others could be implemented relatively easily (pull requests welcome).
@@ -95,3 +138,7 @@ The *defaults* file (`/etc/defaults/logstashforwarder` or `/etc/sysconfig/logsta
        init_defaults => $config_hash
      }
 
+
+## Support
+
+Need help? Join us in `#logstash` on Freenode IRC or subscribe to the `logstash-users@googlegroups.com` mailing list.

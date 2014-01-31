@@ -59,6 +59,28 @@
 #   Defaults to <tt>true</tt>, which will restart the application on any config
 #   change. Setting to <tt>false</tt> disables the automatic restart.
 #
+# [*servers*]
+#   A list of downstream servers listening for our messages.
+#   logstash-forwarder will pick one at random and only switch if
+#   the selected one appears to be dead or unresponsive
+#
+# [*ssl_cert*]
+#   The path to your client ssl certificate
+#
+# [*ssl_key*]
+#   The path to your client ssl key
+#
+# [*ssl_ca*]
+#   The path to your trusted ssl CA file. This is used
+#   to authenticate your downstream server.
+#
+# [*timeout*]
+#   Network timeout in seconds. This is most important for
+#   logstash-forwarder determining whether to stop waiting for an
+#   acknowledgement from the downstream server. If an timeout is reached,
+#   logstash-forwarder will assume the connection or server is bad and
+#   will connect to a server chosen at random from the servers list.
+#
 # The default values for the parameters are set in logstashforwarder::params. Have
 # a look at the corresponding <tt>params.pp</tt> manifest file if you need more
 # technical information about them.
@@ -90,6 +112,7 @@ class logstashforwarder(
   $ssl_cert                = undef,
   $ssl_key                 = undef,
   $ssl_ca                  = undef,
+  $timeout                 = 15,
   $status                  = $logstashforwarder::params::status,
   $restart_on_change       = $logstashforwarder::params::restart_on_change,
   $autoupgrade             = $logstashforwarder::params::autoupgrade,
@@ -143,6 +166,10 @@ class logstashforwarder(
 
   validate_array($servers)
   validate_string($ssl_key, $ssl_ca, $ssl_cert)
+
+  if (!is_integer($timeout)) {
+    fail("\"${timeout}\" is not a valid timeout value")
+  }
 
   #### Manage actions
 
