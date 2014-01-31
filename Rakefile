@@ -2,7 +2,6 @@ require 'rubygems'
 require 'puppetlabs_spec_helper/rake_tasks'
 require 'puppet-syntax/tasks/puppet-syntax'
 require 'puppet-lint/tasks/puppet-lint'
-require 'rspec-system/rake_task'
 #require './spec/lib/template_check_task.rb'
 #require './spec/lib/parser_validate_task.rb'
 
