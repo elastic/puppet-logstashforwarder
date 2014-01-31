@@ -4,7 +4,11 @@ rvm:
   - 1.9.3
   - 2.0.0
 before_install: rm Gemfile.lock || true
-script: bundle exec rake test
+script: 
+ - "bundle exec rake lint"
+ - "bundle exec rake syntax"
+ - "bundle exec rake template"
+ - "bundle exec rake spec SPEC_OPTS='--format documentation'"
 env:
   - PUPPET_VERSION="~> 2.7.0"
   - PUPPET_VERSION="~> 3.0.0"
