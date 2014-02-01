@@ -25,12 +25,17 @@ describe 'logstashforwarder', :type => 'class' do
       context 'main class tests' do
 
         # init.pp
-        it { should contain_class('logstashforwarder::package') }
-        it { should contain_class('logstashforwarder::config') }
-        it { should contain_class('logstashforwarder::service') }
+        it { should contain_anchor('logstashforwarder::begin') }
+        it { should contain_anchor('logstashforwarder::end').that_requires('Class[logstashforwarder::service]') }
+        it { should contain_class('logstashforwarder::params') }
+        it { should contain_class('logstashforwarder::package').that_requires('Anchor[logstashforwarder::begin]') }
+        it { should contain_class('logstashforwarder::config').that_requires('Class[logstashforwarder::package]') }
+        it { should contain_class('logstashforwarder::service').that_requires('Class[logstashforwarder::package]').that_requires('Class[logstashforwarder::config]') }
 
         it { should contain_file('/etc/logstashforwarder') }
         it { should contain_file('/etc/logstashforwarder/ssl') }
+
+        it { should contain_logstashforwarder_config('lsf-config') }
       end
 
       context 'package installation' do
@@ -89,6 +94,8 @@ describe 'logstashforwarder', :type => 'class' do
               })
             }
 
+            it { should contain_exec('create_package_dir_logstashforwarder').with(:command => 'mkdir -p /opt/logstashforwarder/swdl') }
+            it { should contain_file('/opt/logstashforwarder/swdl/').with(:purge => false, :force => false, :require => "Exec[create_package_dir_logstashforwarder]") }
             it { should contain_file('/opt/logstashforwarder/swdl/package.deb').with(:source => 'puppet:///path/to/package.deb', :backup => false) }
             it { should contain_package('logstash-forwarder').with(:ensure => 'present', :source => '/opt/logstashforwarder/swdl/package.deb', :provider => 'dpkg') }
           end
@@ -156,6 +163,8 @@ describe 'logstashforwarder', :type => 'class' do
       context 'service setup' do
 
         context 'with provider \'init\'' do
+
+          it { should contain_logstashforwarder__service__init('logstash-forwarder') }
 
           context 'and default settings' do
 
