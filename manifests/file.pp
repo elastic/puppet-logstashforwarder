@@ -32,10 +32,10 @@ define logstashforwarder::file(
   if ($fields != '') {
     validate_hash($fields)
     $arr_fields = inline_template('<%= @fields.sort.collect { |k,v| "\"#{k}\": \"#{v}\"" }.join(", ") %>')
-    $opt_fields = "  \"fields\": { ${arr_fields} }\n"
+    $opt_fields = ",\n      \"fields\": { ${arr_fields} }\n    "
   }
 
-  $content = "    {\n    ${opt_paths},\n    ${opt_fields}    }"
+  $content = "    {\n    ${opt_paths}${opt_fields}}"
 
   logstashforwarder_fragment { $name:
     tag     => "LSF_CONFIG_${::fqdn}",
