@@ -118,7 +118,7 @@ class logstashforwarder::config {
 
     $opt_timeout = $logstashforwarder::timeout
 
-    $main_config = "{\n  \"network\": {\n    \"servers\": ${opt_servers},\n    \"ssl certificate\": \"${opt_ssl_cert}\",\n    \"ssl ca\": \"${opt_ssl_ca}\",\n    \"ssl key\": \"${opt_ssl_key}\"\n    \"timeout\": ${opt_timeout}\n  },"
+    $main_config = "{\n  \"network\": {\n    \"servers\": ${opt_servers},\n    \"ssl certificate\": \"${opt_ssl_cert}\",\n    \"ssl ca\": \"${opt_ssl_ca}\",\n    \"ssl key\": \"${opt_ssl_key}\",\n    \"timeout\": ${opt_timeout}\n  },"
 
     logstashforwarder_config { 'lsf-config':
       ensure => 'present',
