@@ -114,7 +114,7 @@ class logstashforwarder::package {
             source  => $source_path,
             require => File[$package_dir],
             backup  => false,
-            before  => before
+            before  => $before
           }
 
         }
