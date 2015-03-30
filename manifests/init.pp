@@ -144,32 +144,6 @@ class logstashforwarder(
     fail("\"${ensure}\" is not a valid ensure parameter value")
   }
 
-  # autoupgrade
-  validate_bool($autoupgrade)
-
-  # service status
-  if ! ($status in [ 'enabled', 'disabled', 'running', 'unmanaged' ]) {
-    fail("\"${status}\" is not a valid status parameter value")
-  }
-
-  # restart on change
-  validate_bool($restart_on_change)
-
-  # purge conf dir
-  validate_bool($purge_configdir)
-
-  if ! ($service_provider in $logstashforwarder::params::service_providers) {
-    fail("\"${service_provider}\" is not a valid provider for \"${::operatingsystem}\"")
-  }
-
-  validate_bool($manage_repo)
-
-  validate_array($servers)
-  validate_string($ssl_key, $ssl_ca, $ssl_cert)
-
-  if (!is_integer($timeout)) {
-    fail("\"${timeout}\" is not a valid timeout value")
-  }
 
   #### Manage actions
 
@@ -196,6 +170,33 @@ class logstashforwarder(
   #### Manage relationships
 
   if $ensure == 'present' {
+
+    # autoupgrade
+    validate_bool($autoupgrade)
+
+    # service status
+    if ! ($status in [ 'enabled', 'disabled', 'running', 'unmanaged' ]) {
+      fail("\"${status}\" is not a valid status parameter value")
+    }
+
+    # restart on change
+    validate_bool($restart_on_change)
+
+    # purge conf dir
+    validate_bool($purge_configdir)
+
+    if ! ($service_provider in $logstashforwarder::params::service_providers) {
+      fail("\"${service_provider}\" is not a valid provider for \"${::operatingsystem}\"")
+    }
+
+    validate_bool($manage_repo)
+
+    validate_array($servers)
+    validate_string($ssl_key, $ssl_ca, $ssl_cert)
+
+    if (!is_integer($timeout)) {
+      fail("\"${timeout}\" is not a valid timeout value")
+    }
 
     # we need the software before configuring it
     Anchor['logstashforwarder::begin']
