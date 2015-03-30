@@ -121,13 +121,14 @@ class logstashforwarder::config {
     $main_config = "{\n  \"network\": {\n    \"servers\": ${opt_servers},\n    \"ssl certificate\": \"${opt_ssl_cert}\",\n    \"ssl ca\": \"${opt_ssl_ca}\",\n    \"ssl key\": \"${opt_ssl_key}\",\n    \"timeout\": ${opt_timeout}\n  },"
 
     logstashforwarder_config { 'lsf-config':
-      ensure => 'present',
-      config => $main_config,
-      path   => "${logstashforwarder::configdir}/config.json",
-      tag    => "LSF_CONFIG_${::fqdn}",
-      owner  => $logstashforwarder::logstashforwarder_user,
-      group  => $logstashforwarder::logstashforwarder_group,
-      notify => $notify_service
+      ensure  => 'present',
+      config  => $main_config,
+      path    => "${logstashforwarder::configdir}/config.json",
+      tag     => "LSF_CONFIG_${::fqdn}",
+      owner   => $logstashforwarder::logstashforwarder_user,
+      group   => $logstashforwarder::logstashforwarder_group,
+      notify  => $notify_service,
+      require => File[$logstashforwarder::configdir]
     }
 
   } elsif ( $logstashforwarder::ensure == 'absent' ) {
