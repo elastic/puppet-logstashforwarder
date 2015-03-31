@@ -251,6 +251,29 @@ describe 'logstashforwarder', :type => 'class' do
 
       end # Services
 
+      context 'When managing the repository' do
+
+        let (:params) {
+          default_params.merge({
+            :manage_repo => true,
+          })
+        }
+        case facts[:osfamily]
+        when 'Debian'
+          it { should contain_class('logstashforwarder::repo').that_requires('Anchor[logstashforwarder::begin]') }
+          it { should contain_class('apt') }
+          it { should contain_apt__source('logstashforwarder').with(:release => 'stable', :repos => 'main', :location => 'http://packages.elasticsearch.org/logstashforwarder/debian') }
+        when 'RedHat'
+          it { should contain_class('logstashforwarder::repo').that_requires('Anchor[logstashforwarder::begin]') }
+          it { should contain_yumrepo('logstashforwarder').with(:baseurl => 'http://packages.elasticsearch.org/logstashforwarder/centos', :gpgkey => 'http://packages.elasticsearch.org/GPG-KEY-elasticsearch', :enabled => 1) }
+        when 'SuSE'
+          it { should contain_class('logstashforwarder::repo').that_requires('Anchor[logstashforwarder::begin]') }
+          it { should contain_exec('logstashforwarder_suse_import_gpg') }
+          it { should contain_zypprepo('logstashforwarder').with(:baseurl => 'http://packages.elasticsearch.org/logstashforwarder/centos') }
+        end
+
+      end
+
       context 'when setting the module to absent' do
 
         let (:params) {
