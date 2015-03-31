@@ -36,7 +36,7 @@ class logstashforwarder::repo {
       }
 
       apt::source { 'logstashforwarder':
-        location    => "http://packages.elasticsearch.org/logstashforwarder/debian",
+        location    => 'http://packages.elasticsearch.org/logstashforwarder/debian',
         release     => 'stable',
         repos       => 'main',
         key         => 'D88E42B4',
@@ -46,8 +46,8 @@ class logstashforwarder::repo {
     }
     'RedHat', 'Linux': {
       yumrepo { 'logstashforwarder':
-        descr    => 'elasticsearch repo',
-        baseurl  => "http://packages.elasticsearch.org/logstashforwarder/centos",
+        descr    => 'Logstash Forwarder repo',
+        baseurl  => 'http://packages.elasticsearch.org/logstashforwarder/centos',
         gpgcheck => 1,
         gpgkey   => 'http://packages.elasticsearch.org/GPG-KEY-elasticsearch',
         enabled  => 1,
@@ -61,7 +61,7 @@ class logstashforwarder::repo {
       }
 
       zypprepo { 'logstashforwarder':
-        baseurl     => "http://packages.elasticsearch.org/logstashforwarder/centos",
+        baseurl     => 'http://packages.elasticsearch.org/logstashforwarder/centos',
         enabled     => 1,
         autorefresh => 1,
         name        => 'logstashforwarder',

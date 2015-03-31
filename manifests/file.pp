@@ -4,7 +4,7 @@
 #
 # === Parameters
 #
-# [*path*]
+# [*paths*]
 #   File path(s) to files you want to process
 #   Value type is Array
 #   This variable is required
