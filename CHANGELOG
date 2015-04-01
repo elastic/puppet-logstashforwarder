@@ -1,3 +1,19 @@
+##0.1.1( Apr 01, 2015 )
+
+###Summary
+Bugfix release to make the module work with Puppet Server
+
+####Features
+
+####Bugfixes
+* Fixed an autoloading issue with Puppet Server
+
+####Changes
+
+####Testing changes
+
+####Known bugs
+
 ##0.1.0( Mar 31, 2015 )
 
 ###Summary
