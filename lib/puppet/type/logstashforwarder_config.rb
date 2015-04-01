@@ -1,4 +1,3 @@
-require 'puppet/type/file'
 require 'puppet/type/file/owner'
 require 'puppet/type/file/group'
 require 'puppet/type/file/mode'
