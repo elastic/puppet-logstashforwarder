@@ -6,5 +6,4 @@ license 'Apache License, Version 2.0'
 summary 'Module for managing and configuring logstash forwarder'
 description 'Module for managing and configuring logstash forwarder'
 project_page 'https://github.com/elastic/puppet-logstashforwarder'
-dependency 'puppetlabs/stdlib', '>= 3.0.0'
 
