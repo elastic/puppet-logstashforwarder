@@ -141,4 +141,4 @@ The *defaults* file (`/etc/defaults/logstashforwarder` or `/etc/sysconfig/logsta
 
 ## Support
 
-Need help? Join us in `#logstash` on Freenode IRC or subscribe to the `logstash-users@googlegroups.com` mailing list.
+Need help? Join us in `#logstash` on Freenode IRC or on the https://discuss.elastic.co/c/logstash discussion forum.
