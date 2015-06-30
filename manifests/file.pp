@@ -9,6 +9,11 @@
 #   Value type is Array
 #   This variable is required
 #
+# [*dead_time*]
+#   Set how long file should be kept open after rotated
+#   Value type is String
+#   This variable is optional
+#
 # [*fields*]
 #   Fields you want to add to the event
 #   Value type is Hash
@@ -21,6 +26,7 @@
 #
 define logstashforwarder::file(
   $paths,
+  $dead_time = '',
   $fields = ''
 ) {
 
@@ -29,13 +35,17 @@ define logstashforwarder::file(
   $arr_paths = inline_template('<%= "[ "+@paths.sort.collect { |k| "\"#{k}\""}.join(", ")+" ]" %>')
   $opt_paths = "  \"paths\": ${arr_paths}"
 
+  if ($dead_time != '') {
+      $opt_dead_time = ",\n     \"dead time\": \"${dead_time}\""
+  }
+
   if ($fields != '') {
     validate_hash($fields)
     $arr_fields = inline_template('<%= @fields.sort.collect { |k,v| "\"#{k}\": \"#{v}\"" }.join(", ") %>')
     $opt_fields = ",\n      \"fields\": { ${arr_fields} }\n    "
   }
 
-  $content = "    {\n    ${opt_paths}${opt_fields}}"
+  $content = "    {\n    ${opt_paths}${opt_dead_time}${opt_fields}}"
 
   logstashforwarder_fragment { $name:
     tag     => "LSF_CONFIG_${::fqdn}",
