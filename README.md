@@ -1,8 +1,8 @@
 # puppet-logstashforwarder
 
-A puppet module for managing [logstash-forwarder](https://github.com/elasticsearch/logstash-forwarder)
+A puppet module for managing [logstash-forwarder](https://github.com/elastic/logstash-forwarder)
 
-[![Build Status](https://travis-ci.org/elasticsearch/puppet-logstashforwarder.png?branch=master)](https://travis-ci.org/elasticsearch/puppet-logstashforwarder)
+[![Build Status](https://travis-ci.org/elastic/puppet-logstashforwarder.png?branch=master)](https://travis-ci.org/elastic/puppet-logstashforwarder)
 
 ## Requirements
 
